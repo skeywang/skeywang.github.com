@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无缝运动</title>
+    <style>
+        *{ margin:0; padding:0; list-style:none;}
+        #box{ width:440px; height:300px; position:relative; margin:50px auto; overflow:hidden;}
+        #box ul{ position:absolute; left:0; top:0;}
+        #box ul li{ float:left; width:440px; height:300px;}
+        #box ul li img{ height:300px;}
+
+        #box a{ transition:.2s all ease;}
+        #box .prev,#box .next{position:absolute;  top:50%; z-index:2; height:80px; line-height:80px; background:rgba(0,0,0,0.6); color:#fff; width:80px; text-align:center; margin-top:-40px; display:none;}
+        #box .prev{ left:0;}
+        #box .next{ right:0;}
+        #box a:hover{ background:rgba(255,0,0,0.4);}
+
+        #box ol{ position:absolute; width:120px; left:50%; margin-left:-60px; bottom:10px;}
+        #box ol li{ width:20px; height:20px; background:#f60; float:left; margin:2px; text-align:center; text-indent:-9999px; border-radius:50%;}
+        #box ol li.active{ background:#fff;}
+    </style>
+    <script>
+        window.onload=function(){
+            var oBox=document.getElementById('box');
+            var oPrev=oBox.children[0];
+            var oNext=oBox.children[1];
+            var oUl=oBox.children[2];
+            var oOl=oBox.children[3];
+            var aLi=oUl.children;
+            var aBtn=oOl.children;
+            var n = 0;
+            var timer =null;
+            oUl.innerHTML+=oUl.innerHTML;
+            oUl.style.width=aLi[0].offsetWidth*aLi.length+'px';
+            oBox.onmouseover=function(){
+                oPrev.style.display='block';
+                oNext.style.display='block';
+            };
+            oBox.onmouseout=function(){
+                oPrev.style.display='none';
+                oNext.style.display='none';
+            };
+
+            for(var i =0; i<aBtn.length;i++){
+                (function(index){
+                    aBtn[i].onclick=function(){
+                        //Math.floor(n/aBtn.length)
+                        //跑了几轮
+                        //Math.floor(n/aBtn.length)*aBtn.length+index  当前的位置
+                        if((n%5==4 || n%5==-1)&&index==0){
+                             n++;
+                        }
+                        if(n%5==0&&index==aBtn.length-1){
+                            n--;
+                        }
+                        n=Math.floor(n/aBtn.length)*aBtn.length+index;
+                        tab();
+                    };
+                })(i);
+            }
+            function tab(){
+                for(var i=0;i<aBtn.length;i++){
+                    aBtn[i].className=''
+                }
+                aBtn[(n%5+5)%5].className='active';
+//                oUl.style.left=-n*aLi[0].offsetWidth+'px';
+                startmove(oUl,-n*aLi[0].offsetWidth);
+
+            }
+            oPrev.onclick=function(){
+                n--;
+                tab();
+            };
+            oNext.onclick=function(){
+                n++;
+                tab();
+                document.title=n;
+            };
+            var left = 0;
+            var w = oUl.offsetWidth/2;
+            function startmove(obj,target){
+                clearInterval(timer);
+                var start = left;
+                var dis = target-start;
+                var count = Math.floor(500/30);
+                var i = 0;
+                timer=setInterval(function(){
+                    i++;
+                    var a = i/count;
+                    var cur = start+dis*a*a*a;
+                    left=cur;
+                    obj.style.left=(left%w-w)%w+'px';
+                    if(i==count){
+                        clearInterval(timer)
+                    }
+                },30)
+            }
+        };
+    </script>
+</head>
+<body>
+<div id="box">
+    <a href="javascript:;" class="prev">prev</a>
+    <a href="javascript:;" class="next">next</a>
+    <ul>
+        <li><img src="image/5.jpg"></li>
+        <li><img src="image/1.jpg"></li>
+        <li><img src="image/2.jpg"></li>
+        <li><img src="image/3.jpg"></li>
+        <li><img src="image/4.jpg"></li>
+
+    </ul>
+    <ol>
+        <li class="active">0</li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ol>
+</div>
+</body>
+</html>

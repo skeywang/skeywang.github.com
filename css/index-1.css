@@ -1,0 +1,5 @@
+.ul-box{position:absolute;left:100%;top:10%;width:600px;
+    height:500px;display:none;}
+.ul-box .card img{width:100%;}
+.bagcon{position:absolute;left:-120%;top:0;width:100%;height:100%;display: none;}
+.bagbox { margin: 0; padding: 0; position: relative;  background-position: center;  width: 100%; height: 100%; background-size: 100% 100%; display:none;}

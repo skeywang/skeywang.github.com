@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>多作品展示</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        ul{
+            width: 380px;
+            margin: 60px auto;
+            position: relative;
+        }
+        li{
+            list-style: none;
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            margin: 10px;
+            border: 1px solid #000;
+        }
+        img{width:100%;}
+    </style>
+    <script src="../../js/move.js"></script>
+    <script>
+        window.onload = function () {
+            var aLi = document.getElementsByTagName('li');
+            //布局转换
+            var aPos = [];
+            for(var i=0;i<aLi.length;i++){
+                aPos.push({left:aLi[i].offsetLeft,top:aLi[i].offsetTop});
+            }
+            for(var i=0;i<aPos.length;i++){
+                aLi[i].style.position='absolute';
+                aLi[i].style.left=aPos[i].left+'px';
+                aLi[i].style.top=aPos[i].top+'px';
+                aLi[i].style.margin=0;
+            }
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].index=i;
+                aLi[i].onmouseover=function(){
+                    move(this,{width:200,height:200,top:aPos[this.index].top-50,left:aPos[this.index].left-50});
+                    this.style.zIndex=10000;
+                };
+                aLi[i].onmouseout=function(){
+                    move(this,{width:100,height:100,top:aPos[this.index].top,left:aPos[this.index].left});
+                    this.style.zIndex=100;
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li><img src="cat/1.jpg" alt=""></li>
+            <li><img src="cat/2.jpg" alt=""></li>
+            <li><img src="cat/3.jpg" alt=""></li>
+            <li><img src="cat/4.jpg" alt=""></li>
+            <li><img src="cat/5.jpg" alt=""></li>
+            <li><img src="cat/6.jpg" alt=""></li>
+            <li><img src="cat/7.jpg" alt=""></li>
+            <li><img src="cat/8.jpg" alt=""></li>
+            <li><img src="cat/9.jpg" alt=""></li>
+        </ul>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
