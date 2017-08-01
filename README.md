@@ -1,2 +1,2 @@
-# skeywang.github.com
+# skeywang.github.io
 This is my web page.
